@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}FREE LOVE!{% endblock %}</title>
+    <title>{% block title %}FREE LOVE CMS{% endblock %}</title>
     {% block stylesheets %}
-        {% stylesheets '/Resources/cms/assets/css/*' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% stylesheets '@AppBundle/Resources/cms/css/cms.css' filter='cssrewrite' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -15,10 +15,8 @@
 
 {% endblock %}
 
-{% block javascripts %}
-    {% javascripts '@AppBundle/Resources/cms/assets/js/*' %}
+{#{% block javascripts %}
     <script src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-{% endblock %}
+{% endblock %}#}
 </body>
 </html>

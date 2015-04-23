@@ -1,0 +1,15 @@
+{% extends 'baseCMS.html.twig' %}
+
+{% block body %}
+
+    {% image '@AppBundle/Resources/cms/img/logo.png' %}
+        <img id="logo" src="{{ asset_url }}" alt="Example" />
+    {% endimage %}
+
+    <div id="title">Welcome To <3 <3 CMS</div>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endblock %}
