@@ -25,7 +25,8 @@ class ReleaseController extends Controller{
                     #->add('Length', 'text') Not needed on account of track times
                     ->add('Genre', 'text')
                     ->add('Description', 'textarea')
-                    ->add('Tracks', 'textarea')
+                    ->add('Tracks', 'hidden')
+                    ->add('addTrack', 'button', array('label'=>'+'))
                     ->add('save', 'submit', array('label' => 'Add Release'))
                     ->getForm();
 
@@ -35,16 +36,11 @@ class ReleaseController extends Controller{
             $tracks = explode(',', $release->getTracks());
             $bool = false;
             #FIXME: Needs to work properly, for some reason always gets the last two values without dropping
-            for($i=0; $i<count($tracks)-1; $i++){
-                if(!$bool){
-                    unset($tracks[$i]);
-                    $bool = !$bool;
-                }else{
-                    $bool = !$bool;
-                }
+            foreach($tracks as $t){
+
             }
 
-            var_dump($tracks);
+            var_dump($tracks);die;
         }
 
         return $this->render('cms/addRel.html.twig', array(

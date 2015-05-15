@@ -15,8 +15,14 @@
 
 {% endblock %}
 
-{#{% block javascripts %}
-    <script src="{{ asset_url }}"></script>
-{% endblock %}#}
+        {% block javascripts %}
+            {% javascripts
+            '@AppBundle/Resources/cms/js/jquery.js'
+            '@AppBundle/Resources/cms/js/addRel.js'
+
+            %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+        {% endblock %}
 </body>
 </html>

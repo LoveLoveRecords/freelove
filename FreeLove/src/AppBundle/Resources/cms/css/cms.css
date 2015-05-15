@@ -53,6 +53,75 @@ label{
     width: 100%;
 }
 
+#form_addTrack{
+    border-radius: 3px;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #A7A7A7;
+    box-shadow: 0px 1px 1px #808080;
+    background: none repeat scroll 0% 0% transparent;
+    float: right;
+    font-size: 40px;
+    font-weight: 100;
+    cursor: pointer;
+    cursor: hand;
+    transition: color 0.2s, background 0.2s;
+}
+
+#form_addTrack:hover{
+    color: #21dd6a;
+    background: #000000;
+}
+
+.track{
+    float: left;
+    width: 100px;
+    clear: none;
+}
+
+#form>.trackNameContainer{
+    width: 60%;
+    margin-right: 30px;
+}
+
+.trackNameContainer>label{
+    margin: 0;
+    width: 100px;
+}
+
+#form > .trackLengthInfo{
+    float: right;
+    width: auto;
+    clear: none;
+}
+
+.trackName{
+    float: left;
+    clear: both;
+    width: 100%;
+}
+
+.track+span{
+    float: left;
+    position: relative;
+    margin: 43px 10px 0 10px;
+    font-size: 30px;
+}
+
+.trackLength{
+    width: 100px;
+    float: left;
+    text-align: center;
+    clear: both;
+}
+
+.trackLengthLable{
+    float: left;
+    clear: both;
+    margin: 0;
+}
+
+
 input{
     width: 70%;
     float: right;
@@ -67,16 +136,16 @@ input{
 }
 
 textarea{
-    width: 70%;
+    width: 69%;
     min-height: 150px;
     float: right;
     border: medium none;
     background: none repeat scroll 0% 0% #808080;
     border-radius: 3px;
-    padding-left: 10px;
+    padding-left: 1%;
     font-size: 12px;
     color: #FFF;
-    padding-top: 10px;
+    padding-top: 1%;
     margin-bottom: 40px;
     outline: none;
 }
