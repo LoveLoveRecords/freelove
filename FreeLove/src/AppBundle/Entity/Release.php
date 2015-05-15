@@ -60,7 +60,7 @@ class Release
     /**
      * @ORM\Column(type="string", length=255) #Link to thumbnail art
      */
-    protected $thumnail;
+    protected $thumbnail;
     /**
      * @ORM\Column(type="string", length=255) #Link to full size art
      */
@@ -262,14 +262,14 @@ class Release
     }
 
     /**
-     * Set thumnail
+     * Set thumbnail
      *
-     * @param string $thumnail
+     * @param string $thumbnail
      * @return Release
      */
-    public function setThumnail($thumnail)
+    public function setThumbnail($thumbnail)
     {
-        $this->thumnail = $thumnail;
+        $this->thumbnail = $thumbnail;
 
         return $this;
     }
@@ -279,9 +279,9 @@ class Release
      *
      * @return string 
      */
-    public function getThumnail()
+    public function getThumbnail()
     {
-        return $this->thumnail;
+        return $this->thumbnail;
     }
 
     /**

@@ -5,6 +5,11 @@
 
 var i = 1;
 
+$(document).ready(function () {
+    $('#form_addTrack').click();
+
+});
+
     $('#form_addTrack').click(function () {
         $(this).parent().before('' +
         '<div class="track trackNameContainer">' +

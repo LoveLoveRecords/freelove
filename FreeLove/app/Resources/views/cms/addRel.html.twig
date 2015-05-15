@@ -9,7 +9,17 @@
     <div id="title">Welcome To <3 <3 CMS</div>
 
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <div id="form">
+        {{ form_row(form.Artist) }}
+        {{ form_row(form.Title) }}
+        {{ form_row(form.Genre) }}
+        {{ form_row(form.Description) }}
+        {{ form_row(form.Tracks) }}
+        {{ form_row(form.addTrack) }}
+        {{ form_row(form.Download, { 'attr' : {'class' : 'upload' } }) }}
+        {{ form_row(form.Thumbnail, { 'attr' : {'class' : 'upload' } }) }}
+        {{ form_row(form.Artwork, { 'attr' : {'class' : 'upload' } }) }}
+    </div>
     {{ form_end(form) }}
 
 {% endblock %}

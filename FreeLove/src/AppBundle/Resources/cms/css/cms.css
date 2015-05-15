@@ -7,8 +7,9 @@ html{
 body{
     width: 80%;
     height: 100%;
-    margin: 0px auto;
+    margin: 0 auto;
     text-align: center;
+    min-width: 900px;
 }
 
 #logo{
@@ -17,8 +18,8 @@ body{
     margin: auto;
     position: fixed;
     z-index: -1;
-    left: 0px;
-    right: 0px;
+    left: 0;
+    right: 0;
     opacity: 0.1;
     top: 0;
     bottom: 0;
@@ -28,11 +29,12 @@ body{
     width: 80%;
     margin: auto;
     position: relative;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    top: 0px;
-    padding: 100px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    padding: 100px 0 0;
+    overflow: hidden;
 }
 
 label{
@@ -42,11 +44,10 @@ label{
     clear: both;
     margin-bottom: 60px;
     font-size: 23px;
-    padding-top: 12px;
 }
 
 #form>div{
-    margin: 10px 0px;
+    margin: 10px 0;
     position: relative;
     float: left;
     clear: both;
@@ -58,13 +59,14 @@ label{
     width: 50px;
     height: 50px;
     border: 1px solid #A7A7A7;
-    box-shadow: 0px 1px 1px #808080;
-    background: none repeat scroll 0% 0% transparent;
+    box-shadow: 0 1px 1px #808080;
+    background: none repeat scroll 0 0 transparent;
     float: right;
     font-size: 40px;
     font-weight: 100;
     cursor: pointer;
     cursor: hand;
+    color: #000000;
     transition: color 0.2s, background 0.2s;
 }
 
@@ -86,7 +88,7 @@ label{
 
 .trackNameContainer>label{
     margin: 0;
-    width: 100px;
+    width: 100%;
 }
 
 #form > .trackLengthInfo{
@@ -121,6 +123,19 @@ label{
     margin: 0;
 }
 
+label.upload{
+    margin-bottom: 0px;
+    padding-top: 5px;
+    width: auto;
+}
+
+input.upload{
+    height: 35px;
+    font-size: 16px;
+    color: black;
+    background: none repeat scroll 0 0 transparent;
+    float: left;
+}
 
 input{
     width: 70%;
@@ -140,7 +155,7 @@ textarea{
     min-height: 150px;
     float: right;
     border: medium none;
-    background: none repeat scroll 0% 0% #808080;
+    background: none repeat scroll 0 0 #808080;
     border-radius: 3px;
     padding-left: 1%;
     font-size: 12px;
@@ -159,9 +174,12 @@ button{
     width: 200px;
     height: 200px;
     border-radius: 280px;
-    background: none repeat scroll 0% 0% #F00;
+    background: none repeat scroll 0 0 #F00;
     border: 5px solid rgba(137, 0, 0, 1);
-    box-shadow: 0px 5px 4px #7B0000;
+    box-shadow: 0 5px 4px #7B0000;
     font-size: 30px;
     font-weight: bold;
+    cursor: pointer;
+    cursor: hand;
+    color: #FFFFFF;
 }
