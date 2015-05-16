@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Class Release
  * @ORM\Entity
- * @ORM\Table(name="release")
+ * @ORM\Table(name="releases")
  */
 
 class Release

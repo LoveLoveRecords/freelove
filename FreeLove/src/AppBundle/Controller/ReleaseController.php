@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Acl\Exception\Exception;
 
 class ReleaseController extends Controller{
 
@@ -39,10 +40,8 @@ class ReleaseController extends Controller{
 
         if($form->isValid()){
             $rel = $this->createAction($form);
-
-            dump($rel);
-
             $this->addToDB($rel);
+            return new Response('New release added: '.$release->getArtist().' - '.$release->getTitle());
         }
 
         return $this->render('cms/addRel.html.twig', array(
@@ -56,8 +55,12 @@ class ReleaseController extends Controller{
     public function createAction(Form $form)
     {
         $release = new Release();
-        $release->setSerial('FREELOV'.$release->getId());
 
+        $id = $this->getDoctrine()->getManager()->getConnection()->lastInsertId();
+        $id = (int)$id;
+        $id = $id + 1;
+
+        $release->setSerial('FREELOV'.$id);
 
         $artist = $form->get('Artist')->getData();
         $title = $form->get('Title')->getData();
@@ -107,27 +110,12 @@ class ReleaseController extends Controller{
         return $fileString;
     }
 
-/*    function generateRandomString($length = 10) {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
-    }*/
 
     public function addToDB(Release $release)
     {
-        try{
         $em = $this->getDoctrine()->getManager();
         $em->persist($release);
         $em->flush();
-        return new Response('New release added: '.$release->getArtist().' - '.$release->getTitle());
-            }catch(\Exception $e){
-        var_dump($e->getMessage());
-        }
-
     }
 
 
