@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Release;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,7 +26,8 @@ class ReleaseController extends Controller{
                     #->add('Length', 'text') Not needed on account of track times
                     ->add('Genre', 'text')
                     ->add('Description', 'textarea')
-                    ->add('Tracks', 'hidden')
+                    ->add('Tracks', 'text', array('attr' => array('style' => 'display:none')))
+                    ->add('Length', 'text', array('label' => ' ', 'attr' => array('style' => 'display:none')))
                     ->add('addTrack', 'button', array('label'=>'+'))
                     ->add('Download', 'file') # Download URL string    }
                     ->add('Thumbnail', 'file') # Thumbnail URL string  } On form submission these three move the files the correct place and then the URLs of each is called for the createAction() arguments
@@ -36,18 +38,11 @@ class ReleaseController extends Controller{
         $form->handleRequest($request);
 
         if($form->isValid()){
-/*            $tracks = explode(',', $release->getTracks());
-            $bool = false;
-            #FIXME: Needs to work properly, for some reason always gets the last two values without dropping
-            foreach($tracks as $t){
+            $rel = $this->createAction($form);
 
-            }
+            dump($rel);
 
-            var_dump($tracks);die;*/
-
-            $dl = $this->uploadAction($form, 'Download');
-            $thumb = $this->uploadAction($form, 'Artwork');
-            $art = $this->uploadAction($form, 'Thumbnail');
+            $this->addToDB($rel);
         }
 
         return $this->render('cms/addRel.html.twig', array(
@@ -56,10 +51,25 @@ class ReleaseController extends Controller{
 
     }
 
-    public function createAction($artist, $title, $length, $genre, $description, $tracks, $download, $thumb, $art)
+
+
+    public function createAction(Form $form)
     {
         $release = new Release();
         $release->setSerial('FREELOV'.$release->getId());
+
+
+        $artist = $form->get('Artist')->getData();
+        $title = $form->get('Title')->getData();
+        $genre = $form->get('Genre')->getData();
+        $description = $form->get('Description')->getData();
+        $tracks = $form->get('Tracks')->getData();
+        $length = $form->get('Length')->getData();
+        $download = $this->uploadAction($form, 'Download', $release);
+        $thumb = $this->uploadAction($form, 'Artwork', $release);
+        $art = $this->uploadAction($form, 'Thumbnail', $release);
+
+
         $release->setArtist($artist);
         $release->setTitle($title);
         $release->setLength($length);
@@ -67,31 +77,37 @@ class ReleaseController extends Controller{
         $release->setDescription($description);
         $release->setTracks($tracks);
         $release->setDownload($download);
-        $release->setThumnail($thumb);
+        $release->setThumbnail($thumb);
         $release->setArtwork($art);
+
+        return $release;
     }
 
-    public function uploadAction($form, $file)
+    public function uploadAction($form, $file, Release $rel)
     {
-        $fileString = $this->generateRandomString(10);
+        $fileString = $rel->getSerial();
 
+        #TODO: Needs to include error checking, use preg_match and $form[]->getData to make sure files are the right type
         switch($file)
         {
             case 'Download':
-                $fileString = $fileString.'.wav';
+                $fileString = $fileString.'.zip';
             break;
             case 'Thumbnail':
+                $fileString = $fileString.'Thumb.jpg';
+                break;
             case 'Artwork':
                 $fileString = $fileString.'.jpg';
             break;
         }
 
         $dir = 'bin/'; #FIXME: Needs to be directory for file uploads (maybe definable in the parameters.yml?)
+
         $form[''.$file]->getData()->move($dir, $fileString);
-        return $dir.$fileString;
+        return $fileString;
     }
 
-    function generateRandomString($length = 10) {
+/*    function generateRandomString($length = 10) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -99,15 +115,21 @@ class ReleaseController extends Controller{
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
-    }
+    }*/
 
     public function addToDB(Release $release)
     {
+        try{
         $em = $this->getDoctrine()->getManager();
         $em->persist($release);
         $em->flush();
         return new Response('New release added: '.$release->getArtist().' - '.$release->getTitle());
+            }catch(\Exception $e){
+        var_dump($e->getMessage());
+        }
+
     }
+
 
 
 
