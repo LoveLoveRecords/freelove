@@ -2,6 +2,11 @@ home:
   path: /
   defaults: { _controller: AppBundle:Home:index }
 
+
+cms_login:
+  path: /cms/
+  defaults: { _controller: AppBundle:CMS:index }
+
 cms_add:
   path: /cms/add
   defaults: { _controller: AppBundle:Release:index }

@@ -15,10 +15,13 @@
 
         {% endblock %}
 
-{#        {% block javascripts %}
-            {% javascripts '@AppBundle/Resources/assets/js/*' %}
-                <script src="{{ asset_url }}"></script>
+        {% block javascripts %}
+            {% javascripts
+            '@AppBundle/Resources/js/jquery.js'
+            '@AppBundle/Resources/js/masonry.js'
+            %}
+            <script src="{{ asset_url }}"></script>
             {% endjavascripts %}
-        {% endblock %}#}
+        {% endblock %}
     </body>
 </html>

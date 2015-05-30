@@ -6,7 +6,7 @@
  * Time: 2:05 PM
  */
 
-namespace AppBundle\Controller;
+namespace AppBundle\cms\Controller;
 
 use AppBundle\Entity\Release;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,20 +21,7 @@ class ReleaseController extends Controller{
     {
         $release = new Release();
 
-        $form = $this->createFormBuilder($release)
-                    ->add('Artist', 'text')
-                    ->add('Title', 'text')
-                    #->add('Length', 'text') Not needed on account of track times
-                    ->add('Genre', 'text')
-                    ->add('Description', 'textarea')
-                    ->add('Tracks', 'text', array('attr' => array('style' => 'display:none')))
-                    ->add('Length', 'text', array('label' => ' ', 'attr' => array('style' => 'display:none')))
-                    ->add('addTrack', 'button', array('label'=>'+'))
-                    ->add('Download', 'file') # Download URL string    }
-                    ->add('Thumbnail', 'file') # Thumbnail URL string  } On form submission these three move the files the correct place and then the URLs of each is called for the createAction() arguments
-                    ->add('Artwork', 'file') # Full Size Art URL string}
-                    ->add('save', 'submit', array('label' => 'Add Release'))
-                    ->getForm();
+        $form = $this->createForm($release);
 
         $form->handleRequest($request);
 
@@ -47,10 +34,24 @@ class ReleaseController extends Controller{
         return $this->render('cms/addRel.html.twig', array(
             'form' => $form->createView(),
         ));
-
     }
 
-
+    public function createForm($release)
+    {
+        return $this->createFormBuilder($release)
+            ->add('Artist', 'text')
+            ->add('Title', 'text')
+            ->add('Genre', 'text')
+            ->add('Description', 'textarea')
+            ->add('Tracks', 'text', array('attr' => array('style' => 'display:none')))
+            ->add('Length', 'text', array('label' => ' ', 'attr' => array('style' => 'display:none')))
+            ->add('addTrack', 'button', array('label'=>'+'))
+            ->add('Download', 'file') # Download URL string    }
+            ->add('Thumbnail', 'file') # Thumbnail URL string  } On form submission these three move the files the correct place and then the URLs of each is called for the createAction() arguments
+            ->add('Artwork', 'file') # Full Size Art URL string}
+            ->add('save', 'submit', array('label' => 'Add Release'))
+            ->getForm();
+    }
 
     public function createAction(Form $form)
     {
@@ -61,27 +62,15 @@ class ReleaseController extends Controller{
         $id = $id + 1;
 
         $release->setSerial('FREELOV'.$id);
-
-        $artist = $form->get('Artist')->getData();
-        $title = $form->get('Title')->getData();
-        $genre = $form->get('Genre')->getData();
-        $description = $form->get('Description')->getData();
-        $tracks = $form->get('Tracks')->getData();
-        $length = $form->get('Length')->getData();
-        $download = $this->uploadAction($form, 'Download', $release);
-        $thumb = $this->uploadAction($form, 'Artwork', $release);
-        $art = $this->uploadAction($form, 'Thumbnail', $release);
-
-
-        $release->setArtist($artist);
-        $release->setTitle($title);
-        $release->setLength($length);
-        $release->setGenre($genre);
-        $release->setDescription($description);
-        $release->setTracks($tracks);
-        $release->setDownload($download);
-        $release->setThumbnail($thumb);
-        $release->setArtwork($art);
+        $release->setArtist($form->get('Artist')->getData());
+        $release->setTitle($form->get('Title')->getData());
+        $release->setLength($form->get('Length')->getData());
+        $release->setGenre($form->get('Genre')->getData());
+        $release->setDescription($form->get('Description')->getData());
+        $release->setTracks($form->get('Tracks')->getData());
+        $release->setDownload($this->uploadAction($form, 'Download', $release));
+        $release->setThumbnail($this->uploadAction($form, 'Artwork', $release));
+        $release->setArtwork($this->uploadAction($form, 'Thumbnail', $release));
 
         return $release;
     }
@@ -117,8 +106,4 @@ class ReleaseController extends Controller{
         $em->persist($release);
         $em->flush();
     }
-
-
-
-
 }
