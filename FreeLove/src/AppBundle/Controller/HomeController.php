@@ -9,7 +9,6 @@ class HomeController extends Controller
 {
     public function indexAction()
     {
-        var_dump($this->releaseAction(1));
         return $this->render('home/index.html.twig');
     }
 

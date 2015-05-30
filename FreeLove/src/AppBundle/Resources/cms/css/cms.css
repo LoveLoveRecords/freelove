@@ -183,3 +183,8 @@ button{
     cursor: hand;
     color: #FFFFFF;
 }
+
+#form+div+div{
+    width: 200px;
+    margin: 0 auto 50px;
+}

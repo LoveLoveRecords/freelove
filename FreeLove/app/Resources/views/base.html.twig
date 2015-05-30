@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <title>{% block title %}FREE LOVE!{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets '/Resources/assets/css/*' filter='cssrewrite' %}
+            {% stylesheets '@AppBundle/Resources/css/freelove.css' filter='cssrewrite' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
             {% endstylesheets %}
         {% endblock %}
@@ -19,6 +19,7 @@
             {% javascripts
             '@AppBundle/Resources/js/jquery.js'
             '@AppBundle/Resources/js/masonry.js'
+            '@AppBundle/Resources/js/freelove.js'
             %}
             <script src="{{ asset_url }}"></script>
             {% endjavascripts %}

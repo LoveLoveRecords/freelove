@@ -1,0 +1,13 @@
+.item {
+    width: 200px;
+    height: 200px;
+    background: grey;
+    margin: 10px;
+    float: left;
+    transition: width 0.2s, height 0.2s;
+}
+
+.item.selected{
+    height: 420px;
+    width: 420px;
+}
