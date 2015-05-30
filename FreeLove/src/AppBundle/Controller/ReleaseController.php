@@ -6,14 +6,13 @@
  * Time: 2:05 PM
  */
 
-namespace AppBundle\cms\Controller;
+namespace AppBundle\Controller;
 
 use AppBundle\Entity\Release;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Acl\Exception\Exception;
 
 class ReleaseController extends Controller{
 
@@ -21,7 +20,7 @@ class ReleaseController extends Controller{
     {
         $release = new Release();
 
-        $form = $this->createForm($release);
+        $form = $this->makeForm($release);
 
         $form->handleRequest($request);
 
@@ -36,7 +35,7 @@ class ReleaseController extends Controller{
         ));
     }
 
-    public function createForm($release)
+    public function makeForm($release)
     {
         return $this->createFormBuilder($release)
             ->add('Artist', 'text')
