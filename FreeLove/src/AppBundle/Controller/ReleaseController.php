@@ -38,6 +38,7 @@ class ReleaseController extends Controller{
     public function makeForm($release)
     {
         return $this->createFormBuilder($release)
+            ->add('Serial', 'text')
             ->add('Artist', 'text')
             ->add('Title', 'text')
             ->add('Genre', 'text')
@@ -55,12 +56,9 @@ class ReleaseController extends Controller{
     public function createAction(Form $form)
     {
         $release = new Release();
+        $serial = strtoupper($form->get('Serial')->getData());
 
-        $id = $this->getDoctrine()->getManager()->getConnection()->lastInsertId();
-        $id = (int)$id;
-        $id = $id + 1;
-
-        $release->setSerial('FREELOV'.$id);
+        $release->setSerial($serial);
         $release->setArtist($form->get('Artist')->getData());
         $release->setTitle($form->get('Title')->getData());
         $release->setLength($form->get('Length')->getData());
@@ -77,22 +75,21 @@ class ReleaseController extends Controller{
     public function uploadAction($form, $file, Release $rel)
     {
         $fileString = $rel->getSerial();
+        $dir = 'bin/'; #FIXME: Needs to be directory for file uploads (maybe definable in the parameters.yml?)
 
         #TODO: Needs to include error checking, use preg_match and $form[]->getData to make sure files are the right type
         switch($file)
         {
             case 'Download':
-                $fileString = $fileString.'.zip';
+                $fileString = $dir.$fileString.'.zip';
             break;
             case 'Thumbnail':
-                $fileString = $fileString.'Thumb.jpg';
+                $fileString = $dir.$fileString.'Thumb.jpg';
                 break;
             case 'Artwork':
-                $fileString = $fileString.'.jpg';
+                $fileString = $dir.$fileString.'.jpg';
             break;
         }
-
-        $dir = 'bin/'; #FIXME: Needs to be directory for file uploads (maybe definable in the parameters.yml?)
 
         $form[''.$file]->getData()->move($dir, $fileString);
         return $fileString;

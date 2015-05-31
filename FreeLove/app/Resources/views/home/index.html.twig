@@ -2,14 +2,31 @@
 
 {% block body %}
     <div id="container">
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
+        {% for release in releases %}
+            <div class="item">
+                <div class="serial">{{ release.serial }}</div>
+                <img src="{{ release.thumb }}" />
+                <ul>
+                    <li>{{ release.artist }}</li>
+                    <li>{{ release.title }}</li>
+                    <li>{{ release.genre }}</li>
+                    <li>{{ release.length }}</li>
+                    <li>{{ release.description }}</li>
+                    <li>
+                        <ul>
+                            {% for trackNum, track in release.tracks %}
+                                <li>{{ trackNum }}</li>
+                                <li>{{ track }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ release.download }}">
+                        <button>Download!</button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

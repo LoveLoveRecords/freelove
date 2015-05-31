@@ -9,25 +9,40 @@ class HomeController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('home/index.html.twig');
+
+        $rels = $this->prepReleases();
+        return $this->render('home/index.html.twig', array('releases' => $rels));
     }
 
-    public function releaseAction($id)
+    private function prepReleases()
     {
-        $release = $this->getDoctrine()->getRepository('AppBundle:Release')->find($id);
+        $rels = $this->getDoctrine()->getRepository('AppBundle:Release')->findAll();
+        $releases = array();
 
-        return $this->prepareRelease($release);
+        foreach($rels as $release)
+        {
+            array_push($releases, $this->prepareRelease($release));
+        }
+
+        dump($releases);
+
+        return $releases;
     }
 
     private function prepareRelease(Release $release)
     {
         $tracks = $release->getTracks();
 
-        list($k, $v) = explode('=>', $tracks);
-        $tracksArray[ $k ] = $v;
+        $ts = explode(',', $tracks);
+
+        foreach($ts as $t) {
+            list($k, $v) = explode('=>', $t);
+            $tracksArray[$k] = $v;
+        }
 
         $releaseInfo = [
             'artist' => $release->getArtist(),
+            'title' => $release->getTitle(),
             'genre' => $release->getGenre(),
             'serial' => $release->getSerial(),
             'artwork' => $release->getArtwork(),
