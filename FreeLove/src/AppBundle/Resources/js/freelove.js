@@ -5,9 +5,7 @@ $(function(){
     $('#container').masonry({
         // options
         itemSelector : '.item',
-        isAnimated: true,
-        columnWidth: 10,
-        gutterWidth: 10
+        isAnimated: true
     });
 });
 
