@@ -1,6 +1,6 @@
 set :application, "Free Love"
 set :domain,      "85.25.253.205"
-set :deploy_to,   "httpdocs/derp69"
+set :deploy_to,   "httpdocs/derp69v3"
 set :app_path,    "app"
 set :user,        "lovelove"
 set :use_sudo,    false
@@ -14,7 +14,7 @@ set :update_vendors, true
 set :shared_files,      ["app/config/parameters.yml"]
 set :shared_children,     [app_path + "/logs", web_path + "/uploads", "vendor"]
 set :dump_assetic_assets, true
-set :branch, "v0.2.0"
+set :branch, "master"
 set :model_manager, "doctrine"
 # Or: `propel`
 
